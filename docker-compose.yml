@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    hostname: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+
+  mongo-import:
+    image: mongo
+    container_name: mongodb_import
+    depends_on:
+      - mongo
+    volumes:
+      - ./data:/tmp/data
+    command: >
+      bash -c "mongoimport --host mongo --db bikes-db --collection bikes --type json --file /tmp/data/bikes.json --jsonArray"
