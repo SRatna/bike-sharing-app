@@ -1,19 +1,6 @@
 import { List } from 'antd';
 import { useEffect, useState } from 'react';
-const data = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-];
+
 const BikeList = () => {
   const [bikes, setBikes] = useState([]);
 
