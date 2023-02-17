@@ -14,6 +14,7 @@ const BikeList = () => {
 
   const closeBikeDetailsModal = () => {
     setIsBikeDetailsModalOpen(false);
+    setCurrentBike(null);
   };
 
   const fetchBikes = async () => {
