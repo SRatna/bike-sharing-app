@@ -4,41 +4,41 @@
     "latitude": 50.882436,
     "longitude": 8.052119,
     "rented": false,
-    "sessionId": ""
+    "session_id": ""
   },
   {
     "name": "Bike 2",
     "latitude": 50.906903,
     "longitude": 7.991550,
     "rented": false,
-    "sessionId": ""
+    "session_id": ""
   },
   {
     "name": "Bike 3",
     "latitude": 50.909934,
     "longitude": 8.102787,
     "rented": false,
-    "sessionId": ""
+    "session_id": ""
   },
   {
     "name": "Bike 4",
     "latitude": 50.899108,
     "longitude": 7.870701,
     "rented": false,
-    "sessionId": ""
+    "session_id": ""
   },
   {
     "name": "Bike 5",
     "latitude": 50.831069,
     "longitude": 7.986057,
     "rented": false,
-    "sessionId": ""
+    "session_id": ""
   },
   {
     "name": "Bike 6",
     "latitude": 50.817188,
     "longitude": 8.076008,
     "rented": false,
-    "sessionId": ""
+    "session_id": ""
   }
 ]
