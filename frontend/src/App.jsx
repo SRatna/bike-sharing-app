@@ -1,6 +1,7 @@
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 const { Header, Content, Footer } = Layout;
 import './App.css';
+import BikeList from './components/BikeList';
 
 const App = () => {
   const {
@@ -32,7 +33,7 @@ const App = () => {
             background: colorBgContainer,
           }}
         >
-          Content
+          <BikeList />
         </div>
       </Content>
       <Footer
