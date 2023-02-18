@@ -1,12 +1,22 @@
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Layout, theme } from 'antd';
+import { useEffect } from 'react';
 const { Header, Content, Footer } = Layout;
 import './App.css';
 import BikeList from './components/BikeList';
+import { v4 as uuidv4 } from 'uuid';
 
 const App = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+ 
+  useEffect(() => {
+    const sessionId = sessionStorage.getItem('sessionId');
+    if (!sessionId) {
+      sessionStorage.setItem('sessionId', uuidv4());
+    }
+  }, [])
+
   return (
     <Layout className="layout">
       <Header>
