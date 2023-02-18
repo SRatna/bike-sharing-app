@@ -21,7 +21,7 @@ const BikeDetailsModal = ({ isModalOpen, closeModal, bike, updateBikesList }) =>
       const msg = await rawResponse.text();
       await messageApi.open({
         type: 'error',
-        content: msg,
+        content: `Sorry, you ${msg}.`,
       });
       return;
     }
