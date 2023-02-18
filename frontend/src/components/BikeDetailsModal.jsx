@@ -3,9 +3,24 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import "leaflet/dist/leaflet.css"
 import { useEffect, useRef } from 'react';
 
-const BikeDetailsModal = ({ isModalOpen, closeModal, bike }) => {
+const BikeDetailsModal = ({ isModalOpen, closeModal, bike, updateBikesList }) => {
+  const sessionId = sessionStorage.getItem('sessionId');
 
-  const handleOk = () => {
+  const updateBike = async () => {
+    const { id, rented } = bike;
+    const payload = {id, sessionId, rented: !rented };
+    const rawResponse = await fetch('/api/bikes', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    await rawResponse.json();
+    updateBikesList(payload);
+  }
+  const handleOk = async () => {
+    await updateBike();
     closeModal();
   };
   

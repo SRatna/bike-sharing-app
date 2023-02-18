@@ -23,8 +23,21 @@ const BikeList = () => {
     setBikes(bikesData);
   }
 
+  const updateBikesList = (newBike) => {
+    const updatedBikes = bikes.map((bike) => {
+      if (bike.id === newBike.id) {
+        return {
+          ...bike,
+          ...newBike
+        }
+      }
+      return bike;
+    });
+    setBikes(updatedBikes);
+  }
+
   useEffect(() => {
-    fetchBikes()
+    fetchBikes();
   }, [])
 
   return (
@@ -42,9 +55,10 @@ const BikeList = () => {
         )}
       />
       {currentBike && (<BikeDetailsModal 
-        bike={currentBike} 
-        isModalOpen={isBikeDetailsModalOpen} 
-        closeModal={closeBikeDetailsModal} 
+        bike={currentBike}
+        isModalOpen={isBikeDetailsModalOpen}
+        closeModal={closeBikeDetailsModal}
+        updateBikesList={updateBikesList}
       />)}
     </>
   );
