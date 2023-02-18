@@ -46,7 +46,9 @@ const BikeList = () => {
         itemLayout="horizontal"
         dataSource={bikes}
         renderItem={(item) => (
-          <List.Item>
+          <List.Item 
+            style={{ background: item.rented ? '#f3eeee' : '' }}
+          >
             <List.Item.Meta
               title={<a onClick={() => showBikeDetailsModal(item)}>{item.name}</a>}
               description={item.rented ? 'Rented' : 'Available for rent'}
