@@ -15,6 +15,7 @@ func main() {
 	})
 
 	app.Get("api/bikes", handlers.GetAllBikes)
+	app.Patch("api/bikes", handlers.UpdateBike)
 
 	log.Fatal(app.Listen(":3000"))
 }

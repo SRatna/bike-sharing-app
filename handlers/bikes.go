@@ -36,3 +36,23 @@ func GetAllBikes(c *fiber.Ctx) error {
 	}
 	return c.JSON(bikes)
 }
+
+func UpdateBike(c *fiber.Ctx) error {
+	client, err := db.GetMongoClient()
+	if err != nil {
+		return err
+	}
+	bike := new(Bike)
+
+	if err := c.BodyParser(&bike); err != nil {
+		return err
+	}
+	coll := client.Database(db.Database).Collection(db.BikesCollection)
+	filter := bson.D{{Key: "_id", Value: bike.ID}}
+	update := bson.D{{Key: "$set", Value: bson.D{{Key: "session_id", Value: bike.SessionId}, {Key: "rented", Value: bike.Rented}}}}
+	result, err := coll.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		return err
+	}
+	return c.JSON(result)
+}
