@@ -4,7 +4,7 @@ import BikeDetailsModal from './BikeDetailsModal';
 
 const BikeList = () => {
   const [bikes, setBikes] = useState([]);
-  const [currentBike, setCurrentBike] = useState(null);
+  const [currentBike, setCurrentBike] = useState({});
   const [isBikeDetailsModalOpen, setIsBikeDetailsModalOpen] = useState(false);
 
   const showBikeDetailsModal = (bike) => {
@@ -14,7 +14,6 @@ const BikeList = () => {
 
   const closeBikeDetailsModal = () => {
     setIsBikeDetailsModalOpen(false);
-    setCurrentBike(null);
   };
 
   const fetchBikes = async () => {
@@ -64,12 +63,12 @@ const BikeList = () => {
           </List.Item>
         )}
       />
-      {currentBike && (<BikeDetailsModal 
+      <BikeDetailsModal 
         bike={currentBike}
         isModalOpen={isBikeDetailsModalOpen}
         closeModal={closeBikeDetailsModal}
         updateBikesList={updateBikesList}
-      />)}
+      />
     </>
   );
 }

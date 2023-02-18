@@ -19,28 +19,28 @@ const BikeDetailsModal = ({ isModalOpen, closeModal, bike, updateBikesList }) =>
     });
     if (rawResponse.status !== 200) {
       const msg = await rawResponse.text();
-      await messageApi.open({
-        type: 'error',
-        content: `Sorry, you ${msg}.`,
-      });
+      messageApi.error({ content: `Sorry, you ${msg}.` });
       return;
     }
-    updateBikesList(payload);
     closeModal();
+    updateBikesList(payload);
+    if (payload.rented) {
+      messageApi.success({ content: 'Bike rented successfully.' });
+    } else {
+      messageApi.success({ content: 'Bike returned successfully.' });
+    }
   }
   
-  const handleCancel = () => {
-    closeModal();
-  };
-
   const position = [bike.latitude, bike.longitude];
   const mapRef = useRef(null);
 
   useEffect(() => {
+    if (!isModalOpen) return;
     setTimeout(() => {
-      mapRef.current.invalidateSize()
+      mapRef.current.invalidateSize();
+      mapRef.current.panTo(position);
     }, 150); 
-  }, []);
+  }, [isModalOpen]);
 
   return (
     <>
@@ -49,7 +49,7 @@ const BikeDetailsModal = ({ isModalOpen, closeModal, bike, updateBikesList }) =>
         title={bike.name} 
         open={isModalOpen} 
         onOk={updateBike} 
-        onCancel={handleCancel}
+        onCancel={closeModal}
         okText={bike.rented ? 'Return' : 'Rent'}
       >
         <MapContainer ref={mapRef} style={{ height: 400 }} center={position} zoom={12}>
