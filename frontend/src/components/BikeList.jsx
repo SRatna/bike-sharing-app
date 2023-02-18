@@ -48,6 +48,7 @@ const BikeList = () => {
         renderItem={(item) => (
           <List.Item 
             style={{ background: item.rented ? '#f3eeee' : '' }}
+            actions={[<a key="details" onClick={() => showBikeDetailsModal(item)}>View Details</a>]}
           >
             <List.Item.Meta
               title={<a onClick={() => showBikeDetailsModal(item)}>{item.name}</a>}
