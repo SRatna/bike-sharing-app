@@ -40,6 +40,13 @@ const BikeList = () => {
     fetchBikes();
   }, [])
 
+  const getRentStatus = (bike) => {
+    if (!bike.rented) return 'Available for rent';
+    const sessionId = sessionStorage.getItem('sessionId');
+    if (bike.sessionId !== sessionId) return 'Rented by SOMEONE ELSE';
+    return 'Rented by YOU';
+  }
+
   return (
     <>
       <List
@@ -52,7 +59,7 @@ const BikeList = () => {
           >
             <List.Item.Meta
               title={<a onClick={() => showBikeDetailsModal(item)}>{item.name}</a>}
-              description={item.rented ? 'Rented' : 'Available for rent'}
+              description={getRentStatus(item)}
             />
           </List.Item>
         )}
