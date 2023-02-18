@@ -57,20 +57,22 @@ func UpdateBike(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	bike := new(Bike)
+	bikePayload := new(Bike)
 
-	if err = c.BodyParser(&bike); err != nil {
+	if err = c.BodyParser(&bikePayload); err != nil {
 		return err
 	}
 
 	coll := client.Database(db.Database).Collection(db.BikesCollection)
 
-	if err = hasUserAlreadyRented(bike, coll); err != nil {
-		return err
+	if bikePayload.Rented { // user wants to rent
+		if err = hasUserAlreadyRented(bikePayload, coll); err != nil {
+			return err
+		}
 	}
 
-	filter := bson.D{{Key: "_id", Value: bike.ID}}
-	update := bson.D{{Key: "$set", Value: bson.D{{Key: "session_id", Value: bike.SessionId}, {Key: "rented", Value: bike.Rented}}}}
+	filter := bson.D{{Key: "_id", Value: bikePayload.ID}}
+	update := bson.D{{Key: "$set", Value: bson.D{{Key: "session_id", Value: bikePayload.SessionId}, {Key: "rented", Value: bikePayload.Rented}}}}
 	result, err := coll.UpdateOne(context.TODO(), filter, update)
 
 	if err != nil {
