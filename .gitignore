@@ -2,3 +2,5 @@
 frontend/node_modules/
 tmp/
 dist/
+docs/node_modules/
+docs/dist/
