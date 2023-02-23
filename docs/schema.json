@@ -1,0 +1,29 @@
+{
+	"bikes": {
+		"_id": {
+			"primaryKey": true,
+			"type": "Object",
+			"required": true
+		},
+		"name": {
+			"type": "string",
+			"required": true
+		},
+		"latitude": {
+			"type": "number",
+			"required": true
+		},
+		"longitude": {
+			"type": "number",
+			"required": true
+		},
+		"rented": {
+			"type": "boolean",
+			"required": true
+		},
+		"session_id": {
+			"type": "string",
+			"required": true
+		}
+	}
+}
