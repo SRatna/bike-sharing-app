@@ -12,10 +12,6 @@ func main() {
 
 	app.Static("/", "./dist")
 
-	app.Get("/api/hello", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
-
 	app.Get("api/bikes", handlers.GetAllBikes)
 	app.Patch("api/bikes", handlers.UpdateBike)
 
