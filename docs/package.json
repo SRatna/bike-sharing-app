@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "redocly build-docs openapi.yaml -o dist/api-doc.html"
+    "build": "redocly build-docs openapi.yaml -o dist/api-doc.html",
+    "extract-schema": "extract-mongo-schema -d \"mongodb://mongo:27017/bikes-db\" -o schema.json",
+    "build-schema": "extract-mongo-schema -i ../../schema.json -o dist/schema.html -f html-diagram"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@redocly/cli": "^1.0.0-beta.123"
+    "@redocly/cli": "^1.0.0-beta.123",
+    "extract-mongo-schema": "^0.2.11"
   }
 }
