@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/bike-sharing-app/db"
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -12,12 +13,12 @@ import (
 )
 
 type Bike struct {
-	ID        primitive.ObjectID `json:"id" bson:"_id"`
+	ID        primitive.ObjectID `json:"id" bson:"_id" validate:"required"`
 	Name      string             `json:"name" bson:"name"`
 	Latitude  float64            `json:"latitude" bson:"latitude"`
 	Longitude float64            `json:"longitude" bson:"longitude"`
 	Rented    bool               `json:"rented" bson:"rented"`
-	SessionId string             `json:"sessionId" bson:"session_id"`
+	SessionId string             `json:"sessionId" bson:"session_id" validate:"required"`
 }
 
 func GetAllBikes(c *fiber.Ctx) error {
@@ -73,6 +74,11 @@ func UpdateBike(c *fiber.Ctx) error {
 	bikePayload := new(Bike)
 
 	if err = c.BodyParser(&bikePayload); err != nil {
+		return err
+	}
+
+	validate := validator.New()
+	if err = validate.Struct(bikePayload); err != nil {
 		return err
 	}
 
