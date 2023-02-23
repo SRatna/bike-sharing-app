@@ -30,8 +30,6 @@ paths:
       description: |
         To get all bikes from the database
       operationId: getBikes
-      security:
-        - none: []
       responses:
         '200':
           description: Success
@@ -61,8 +59,6 @@ paths:
       summary: Update bike's rent status
       description: User session id should be sent in order to update bike's rent status 
       operationId: updateBike
-      security:
-        - none: []
       responses:
         '200':
           description: OK
@@ -83,10 +79,6 @@ paths:
         required: true
   
 components:
-  securitySchemes:
-    none:
-      type: http
-      scheme: none
   schemas:
     Bike:
       type: object
