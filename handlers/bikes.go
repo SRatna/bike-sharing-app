@@ -89,7 +89,7 @@ func UpdateBike(c *fiber.Ctx) error {
 
 	if !rentStatus { // user wants to return
 		if err = doesUserOwnsTheBike(bikePayload, coll); err != nil {
-			return err
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 	}
 
