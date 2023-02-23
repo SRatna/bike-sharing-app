@@ -2,6 +2,13 @@ import { Modal, message } from 'antd';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import "leaflet/dist/leaflet.css"
 import { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import bikeIcon from '../bike.png';
+
+const markerIcon = new L.Icon({
+    iconUrl: bikeIcon,
+    iconSize: [32, 32],     
+});
 
 const BikeDetailsModal = ({ isModalOpen, closeModal, bike, updateBikesList }) => {
   const sessionId = sessionStorage.getItem('sessionId');
@@ -57,7 +64,7 @@ const BikeDetailsModal = ({ isModalOpen, closeModal, bike, updateBikesList }) =>
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={position}>
+          <Marker icon={markerIcon} position={position}>
           </Marker>
         </MapContainer>
       </Modal>
