@@ -83,7 +83,7 @@ func UpdateBike(c *fiber.Ctx) error {
 	if rentStatus { // user wants to rent
 		sessionId = bikePayload.SessionId
 		if err = hasUserAlreadyRented(sessionId, coll); err != nil {
-			return err
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
 	}
 
