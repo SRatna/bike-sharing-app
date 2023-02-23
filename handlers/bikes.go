@@ -34,6 +34,9 @@ func GetAllBikes(c *fiber.Ctx) error {
 	if err = cur.All(context.TODO(), &bikes); err != nil {
 		return err
 	}
+	if len(bikes) == 0 {
+		return c.Status(fiber.StatusNotFound).SendString("Bikes not found!")
+	}
 	return c.JSON(bikes)
 }
 

@@ -1,4 +1,4 @@
-import { List } from 'antd';
+import { List, message } from 'antd';
 import { useEffect, useState } from 'react';
 import BikeDetailsModal from './BikeDetailsModal';
 
@@ -6,6 +6,7 @@ const BikeList = () => {
   const [bikes, setBikes] = useState([]);
   const [currentBike, setCurrentBike] = useState({});
   const [isBikeDetailsModalOpen, setIsBikeDetailsModalOpen] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const showBikeDetailsModal = (bike) => {
     setCurrentBike(bike);
@@ -18,6 +19,11 @@ const BikeList = () => {
 
   const fetchBikes = async () => {
     const bikesResponse = await fetch('/api/bikes');
+    if (bikesResponse.status !== 200) {
+      const msg = await bikesResponse.text();
+      messageApi.error({ content: msg });
+      return;
+    }
     const bikesData = await bikesResponse.json();
     setBikes(bikesData);
   }
@@ -48,6 +54,7 @@ const BikeList = () => {
 
   return (
     <>
+      {contextHolder}
       <List
         itemLayout="horizontal"
         dataSource={bikes}
