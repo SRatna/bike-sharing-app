@@ -64,8 +64,9 @@ paths:
           description: OK
         '400':
           description: |
-            User have already rented another bike
+            User has already rented one bike
             OR User cannot return someone else's bike
+            OR Bike not rented yet
         '404':
           description: Bike not found
         '500':
