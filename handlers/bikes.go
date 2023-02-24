@@ -67,7 +67,7 @@ func hasUserAlreadyRented(sessionId string, coll *mongo.Collection) error {
 		}
 		return err
 	}
-	return errors.New("have already rented another bike")
+	return errors.New("have already rented one bike, please return it first")
 }
 
 func doesUserOwnsTheBike(bikePayload *Bike, coll *mongo.Collection) error {
@@ -86,7 +86,7 @@ func isBikeRented(bikeId primitive.ObjectID, coll *mongo.Collection) error {
 		return err
 	} else {
 		if !result.Rented {
-			return errors.New("bike not rented, please rent before returning")
+			return errors.New("bike not rented yet, please rent before returning")
 		}
 	}
 	return nil
