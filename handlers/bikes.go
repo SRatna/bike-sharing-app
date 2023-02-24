@@ -81,6 +81,17 @@ func doesUserOwnsTheBike(bikePayload *Bike, coll *mongo.Collection) error {
 	return nil
 }
 
+func isBikeRented(bikeId primitive.ObjectID, coll *mongo.Collection) error {
+	if result, err := getBike(bikeId, coll); err != nil {
+		return err
+	} else {
+		if !result.Rented {
+			return errors.New("bike not rented, please rent before returning")
+		}
+	}
+	return nil
+}
+
 func UpdateBike(c *fiber.Ctx) error {
 	client, err := db.GetMongoClient()
 	if err != nil {
@@ -114,6 +125,9 @@ func UpdateBike(c *fiber.Ctx) error {
 	}
 
 	if !rentStatus { // user wants to return
+		if err = isBikeRented(bikePayload.ID, coll); err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
+		}
 		if err = doesUserOwnsTheBike(bikePayload, coll); err != nil {
 			return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 		}
