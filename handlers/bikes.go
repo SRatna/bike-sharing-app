@@ -135,11 +135,9 @@ func UpdateBike(c *fiber.Ctx) error {
 
 	filter := bson.D{{Key: "_id", Value: bikePayload.ID}}
 	update := bson.D{{Key: "$set", Value: bson.D{{Key: "session_id", Value: sessionId}, {Key: "rented", Value: rentStatus}}}}
-	result, err := coll.UpdateOne(context.TODO(), filter, update)
-
-	if err != nil {
+	if _, err = coll.UpdateOne(context.TODO(), filter, update); err != nil {
 		return err
 	}
 
-	return c.JSON(result)
+	return c.Status(fiber.StatusOK).SendString("Bike's rent status updated successfully!")
 }
