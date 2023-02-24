@@ -29,13 +29,13 @@ This app uses a number of third party open-source tools:
 You must install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) to run the application.
 
 ### Up and Running
-Run following command from root directory of the project to run the overall application.
+Run following commands from root directory of the project to run the overall application.
 ```shell
 docker-compose build
 docker-compose up -d
 ```
 
-It will build and start the docker image written for the app (which can be found in Dockerfile) and also runs MongoDB docker image. We also import some dummy data in MongoDB using `mongoimport`. We have implemented multi-stage builds in the Dockerfile to automate the process of building frontend builds and generating API doc and DB schema.
+It will build and start the docker image written for the app (which can be seen in [Dockerfile](https://github.com/SRatna/bike-sharing-app/blob/main/Dockerfile)) and also runs MongoDB docker image. We also import some dummy data in MongoDB using `mongoimport`. We have implemented multi-stage builds in the Dockerfile to automate the process of building frontend builds and generating API doc and DB schema.
 
 - The web app can be loaded by visiting [http://localhost:3000/](http://localhost:3000/).
 - The API doc can be viewed by visiting [http://localhost:3000/api-doc.html](http://localhost:3000/api-doc.html).
