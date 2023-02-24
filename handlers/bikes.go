@@ -41,6 +41,22 @@ func GetAllBikes(c *fiber.Ctx) error {
 	return c.JSON(bikes)
 }
 
+func getBike(bikeId primitive.ObjectID, coll *mongo.Collection) (Bike, error) {
+	filter := bson.D{{Key: "_id", Value: bikeId}}
+	var result Bike
+	if err := coll.FindOne(context.TODO(), filter).Decode(&result); err != nil {
+		return result, err
+	}
+	return result, nil
+}
+
+func doesBikeExists(bikeId primitive.ObjectID, coll *mongo.Collection) error {
+	if _, err := getBike(bikeId, coll); err != nil {
+		return err
+	}
+	return nil
+}
+
 func hasUserAlreadyRented(sessionId string, coll *mongo.Collection) error {
 	filter := bson.D{{Key: "session_id", Value: sessionId}}
 	var result Bike
@@ -55,13 +71,12 @@ func hasUserAlreadyRented(sessionId string, coll *mongo.Collection) error {
 }
 
 func doesUserOwnsTheBike(bikePayload *Bike, coll *mongo.Collection) error {
-	filter := bson.D{{Key: "_id", Value: bikePayload.ID}}
-	var result Bike
-	if err := coll.FindOne(context.TODO(), filter).Decode(&result); err != nil {
+	if result, err := getBike(bikePayload.ID, coll); err != nil {
 		return err
-	}
-	if result.SessionId != bikePayload.SessionId {
-		return errors.New("cannot return someone else's bike")
+	} else {
+		if result.SessionId != bikePayload.SessionId {
+			return errors.New("cannot return someone else's bike")
+		}
 	}
 	return nil
 }
@@ -83,6 +98,11 @@ func UpdateBike(c *fiber.Ctx) error {
 	}
 
 	coll := client.Database(db.Database).Collection(db.BikesCollection)
+
+	if err = doesBikeExists(bikePayload.ID, coll); err != nil {
+		return c.Status(fiber.StatusNotFound).SendString("Bike not found!")
+	}
+
 	rentStatus := bikePayload.Rented
 	sessionId := ""
 
